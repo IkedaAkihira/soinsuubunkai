@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>素因数分解</title>
+<meta charset="UTF-8"/>
+</head>
+<body>
+<script>
+let question,answer,wHile;
+let size=1000;
+let list=[2];
+for(let i=3;i<=size;i++){
+for(let j=0;j<list.length;j++){
+if(i%list[j]==0)
+break;
+if(j==list.length-1)
+list.push(i);
+}
+}
+onkeydown=function(e){
+if(e.keyCode==13){
+solve();
+}
+}
+function start(){
+document.getElementById("div1").style.display="none";
+document.getElementById("div2").style.display="block";
+ask();
+}
+function ask(){
+answer="";
+question=Math.floor(Math.random()*999)+2;
+wHile=question;
+let count=0;
+while(wHile!=1){
+if(wHile%list[count]==0){
+answer=`${answer}*${list[count]}`
+wHile=wHile/list[count];
+}else{
+count++
+}
+if(count>=list.length){
+answer=`${answer}*${wHile}`;
+wHile=1;
+}
+}
+document.getElementById("q").textContent=question;
+}
+function solve(){
+const sol=document.getElementById("value").value;
+if(`*${sol}`===answer){
+alert("正解");
+document.getElementById("value").value="";
+ask();
+}else{
+alert("No");
+document.getElementById("value").value="";
+}
+}
+</script>
+<div id="div1">
+<h1>素因数分解ゲーム!!</h1>
+<p>表示される数値を素因数分解しよう。3なら3,4なら2*2,10なら2*5見たいに書いてね。(適当)</p>
+<button onclick="start()">start</button>
+</div>
+<div id="div2" style="display:none">
+<p id="q"></p>
+<input id="value""/>
+<button onclick="solve()">OK</button>
+</div>
+</body>
